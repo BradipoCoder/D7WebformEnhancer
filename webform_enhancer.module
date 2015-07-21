@@ -1,0 +1,17 @@
+<?php
+/**
+* @file
+* A description of what your module does.
+*/
+
+
+/**
+ * Implements hook_form_webform_client_form_alter().
+ * Specific hook for webforms
+ */
+function webform_enhancer_form_webform_client_form_alter(&$form, &$form_state, $form_id) {
+//	if(isset($form["submitted"]["enhanced_webform"])) {
+//
+//	}
+	dpm($form, "WEM");
+}
