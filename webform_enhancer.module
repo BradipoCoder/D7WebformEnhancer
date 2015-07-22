@@ -8,10 +8,28 @@
 /**
  * Implements hook_form_webform_client_form_alter().
  * Specific hook for webforms
+ *
+ * @param array $form
+ * @param array $form_state
+ * @param string $form_id
  */
 function webform_enhancer_form_webform_client_form_alter(&$form, &$form_state, $form_id) {
-//	if(isset($form["submitted"]["enhanced_webform"])) {
-//
-//	}
-	dpm($form, "WEM");
+	if(_webform_enhancer_is_enhanced_webform($form)) {
+		require_once "vendor/autoload.php";
+		$WE = new \Mekit\WebformEnhancer($form);
+		//dpm($form["submitted"], "WE(before)");
+		$WE->enhanceFields();
+		//dpm($form["submitted"], "WE(after)");
+	}
+}
+
+
+/**
+ * @param array $form
+ * @return bool
+ */
+function _webform_enhancer_is_enhanced_webform($form) {
+	return isset($form["submitted"]["enhanced_webform"])
+	       && $form["submitted"]["enhanced_webform"]["#value"] == 1
+	       && $form["submitted"]["enhanced_webform"]["#webform_component"]["type"] == "hidden";
 }
